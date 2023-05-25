@@ -48,7 +48,7 @@ namespace img2ascii
                 Console.WriteLine("Height: " + image.Height);
                 //9 width ve 19 height'lik parçalar halinde taramak lazım, ondan sonra ortalama parlaklığını alıp 0-7 arasındaki bir değere küçültmek lazım. 
                 //resim widthini 9'a bölüp ceil değerini almak mantıklı olabilir. aynı şekilde height değerini de 19'a bölüp ceilini almak.
-                int compression = 4;
+                int compression = 1;
                 int cellHeight = 9*compression;
                 int cellWidth = 4*compression; // Konsoldaki 1 hücrenin boyutları.
                 int brightSum = 0; //Ortalama hesaplanmadan önceki toplam parlaklık. Bu değeri pixel sayısına böleceğiz.
@@ -57,22 +57,6 @@ namespace img2ascii
                 bool showProcess = true;
                 bool invert = false;
                 string symbols = " .,*/(#%&@";
-                if (false)
-                {
-                    Console.Write("Test: ");
-                    for (int i = symbols.Length - 1; i >= 0; i--)
-                    {
-                        Console.Write(symbols[i]);
-                    }
-                    Console.WriteLine("\nTest Completed. ");
-
-                }
-
-                if (false)
-                {
-                    Console.WriteLine(getBrightness(Color.White));
-
-                }
 
                 //Resmin en sol üst noktası, 0, 0 ise sağ alt noktası width-1, height-1
                 if (true) // hesabı açmak.
