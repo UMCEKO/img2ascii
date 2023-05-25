@@ -23,40 +23,95 @@ namespace img2ascii
                 {
                     Console.WriteLine(i + "- " + imageNames[i].Substring(imageNames[i].IndexOf('\\') + 1, imageNames[i].Length - 1 - imageNames[i].IndexOf('\\')));
                 }
+                //Console.WriteLine("s- Settings");
                 Console.WriteLine("q- Quit");
-                string selection = Console.ReadLine();
-                if(selection.ToLower() == "q")
-                {
-                    break;
-                }
-                Bitmap image;
-                try
-                {
-                    image = new Bitmap(Image.FromFile(imageNames[int.Parse(selection)]));
-                }
-                catch
-                {
-                    Console.Clear();
-                    Console.WriteLine();
-                    continue;
-                }
+                
+
+                
+
 
 
             
 
-                Console.WriteLine("Width: " + image.Width);
-                Console.WriteLine("Height: " + image.Height);
                 //9 width ve 19 height'lik parçalar halinde taramak lazım, ondan sonra ortalama parlaklığını alıp 0-7 arasındaki bir değere küçültmek lazım. 
                 //resim widthini 9'a bölüp ceil değerini almak mantıklı olabilir. aynı şekilde height değerini de 19'a bölüp ceilini almak.
-                int compression = 1;
-                int cellHeight = 9*compression;
-                int cellWidth = 4*compression; // Konsoldaki 1 hücrenin boyutları.
+                Bitmap image;
+                float compression = 1;
+                int cellHeight = 4;
+                int cellWidth = 2; // Konsoldaki 1 hücrenin boyutları.
                 int brightSum = 0; //Ortalama hesaplanmadan önceki toplam parlaklık. Bu değeri pixel sayısına böleceğiz.
                 int pixCnt = (cellHeight) * (cellWidth);
                 float brightAvg;
                 bool showProcess = true;
                 bool invert = false;
                 string symbols = " .,*/(#%&@";
+                string selection = Console.ReadLine().ToLower();
+                switch (selection)
+                {
+                    case "q":
+                        System.Environment.Exit(0);
+                        continue;
+                    //case "s":
+                    //    float compressionTemp = compression;
+                    //    int cellHeightTemp = cellHeight;
+                    //    int cellWidthTemp = cellWidth;
+                    //    bool brk = false;
+                    //    while (true)
+                    //    {
+                    //        if (brk)
+                    //        {
+                    //            break;
+                    //        }
+                    //        Console.Clear();
+                    //        Console.WriteLine("1- Change Compression: " + compressionTemp);
+                    //        Console.WriteLine("2- Change Height of a cell in pixels: " + cellHeightTemp);
+                    //        Console.WriteLine("3- Change Width of a cell in pixels: " + cellWidthTemp);
+                    //        Console.WriteLine("s- Save And Quit");
+                    //        Console.WriteLine("q- Quit Without Saving");
+                    //        switch (Console.ReadLine().ToLower()[0])
+                    //        {
+                    //            case '1':
+                    //                Console.WriteLine("Lütfen yeni değeri giriniz:");
+                    //                compressionTemp = float.Parse(Console.ReadLine());
+                    //                continue;
+                    //            case '2':
+                    //                Console.WriteLine("Lütfen yeni değeri giriniz:");
+                    //                cellHeightTemp = int.Parse(Console.ReadLine());
+
+                    //                continue;
+                    //            case '3':
+                    //                Console.WriteLine("Lütfen yeni değeri giriniz:");
+                    //                cellWidthTemp = int.Parse(Console.ReadLine());
+
+                    //                continue;
+                    //            case 's':
+                    //                compression = compressionTemp;
+                    //                cellHeight = cellHeightTemp;
+                    //                cellWidth = cellWidthTemp;
+                    //                brk = true;
+                    //                continue;
+                    //            case 'q':
+                    //                brk = true;
+                    //                continue;
+                    //        }
+
+                    //    }
+                    //    continue;
+                    default:
+                        try
+                        {
+                            image = new Bitmap(Image.FromFile(imageNames[int.Parse(selection)]));
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Clear();
+                            Console.WriteLine(e.Message + "\n");
+                            continue;
+                        }
+                        break;
+                }
+                cellHeight = (int)Math.Ceiling((float)cellHeight * compression);
+                cellWidth = (int)Math.Ceiling((float)cellWidth * compression);
 
                 //Resmin en sol üst noktası, 0, 0 ise sağ alt noktası width-1, height-1
                 if (true) // hesabı açmak.
